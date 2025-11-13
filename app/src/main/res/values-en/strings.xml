@@ -20,4 +20,8 @@
     <string name="hint_year">Release year</string>
     <string name="hint_imdb">IMDB link</string>
     <string name="hint_notes">Notes</string>
+
+
+    <string name="btn_guardar">Save</string>
+
 </resources>

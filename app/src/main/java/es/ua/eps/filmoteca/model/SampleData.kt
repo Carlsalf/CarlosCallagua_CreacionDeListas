@@ -1,10 +1,31 @@
+// app/src/main/java/es/ua/eps/filmoteca/model/SampleData.kt
 package es.ua.eps.filmoteca.model
 
+import es.ua.eps.filmoteca.Film
+import es.ua.eps.filmoteca.R
+
 object SampleData {
-    val films = listOf(
-        Film(1, "Inception", 2010, "Un ladrón que roba secretos a través de los sueños."),
-        Film(2, "Interstellar", 2014, "Un viaje interestelar para salvar a la humanidad."),
-        Film(3, "The Matrix", 1999, "Un hacker descubre la verdadera naturaleza de su realidad."),
-        Film(4, "The Godfather", 1972, "La historia de una familia del crimen organizado.")
+    /** Devuelve una lista de pelis de ejemplo (mutable, por si luego editas). */
+    fun films(): MutableList<Film> = mutableListOf(
+        Film(
+            imageResId = R.mipmap.ic_launcher,
+            title = "Regreso al futuro",
+            director = "Robert Zemeckis",
+            year = 1985,
+            genre = Film.GENRE_SCIFI,
+            format = Film.FORMAT_ONLINE,
+            imdbUrl = "https://www.imdb.com/title/tt0088763/",
+            comments = ""
+        ),
+        Film(
+            imageResId = R.drawable.carlosalfredo, // tu drawable existente
+            title = "Blade Runner",
+            director = "Ridley Scott",
+            year = 1982,
+            genre = Film.GENRE_SCIFI,
+            format = Film.FORMAT_BLURAY,
+            imdbUrl = "https://www.imdb.com/title/tt0083658/",
+            comments = "Neo-noir cyberpunk"
+        )
     )
 }

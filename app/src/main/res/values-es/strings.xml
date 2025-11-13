@@ -6,4 +6,7 @@
     <string name="btn_soporte">Obtener soporte</string>
     <string name="btn_volver">Volver</string>
     <string name="toast_pendiente">Funcionalidad sin implementar</string>
+
+    <string name="btn_guardar">Guardar</string>
+
 </resources>

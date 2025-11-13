@@ -23,40 +23,70 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Insets opcional si tu root tiene id @id/main (lo mantiene seguro)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-            insets
+        // Insets opcionales si tu root tiene id @id/main en activity_main.xml
+        runCatching {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+                val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+                insets
+            }
         }
 
-        fun launchOrToast(clazz: Class<*>) {
-            runCatching { startActivity(Intent(this, clazz)) }
+        fun launchOrToast(intent: Intent) {
+            runCatching { startActivity(intent) }
                 .onFailure {
                     Toast.makeText(
                         this,
-                        "No pude abrir: ${clazz.simpleName}. Revisa el Manifest/clase.",
+                        "No pude abrir la pantalla. Revisa el Manifest / clase.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
         }
 
-        // About
-        binding.btnAbout.setOnClickListener { launchOrToast(AboutActivity::class.java) }
+        // === Botones presentes en activity_main.xml ===
+        binding.btnAbout.setOnClickListener {
+            launchOrToast(Intent(this, AboutActivity::class.java))
+        }
 
-        // Lista XML/Recycler
-        binding.btnListaXml.setOnClickListener { launchOrToast(FilmListActivity::class.java) }
+        binding.btnListaXml.setOnClickListener {
+            launchOrToast(Intent(this, FilmListActivity::class.java))
+        }
 
-        // Lista Compose
-        binding.btnListaCompose.setOnClickListener { launchOrToast(FilmListComposeActivity::class.java) }
+        binding.btnListaCompose.setOnClickListener {
+            try {
+                startActivity(Intent(this, FilmListComposeActivity::class.java))
+            } catch (t: Throwable) {
+                android.util.Log.e("NAV", "Fallo al abrir FilmListComposeActivity", t)
+                Toast.makeText(
+                    this,
+                    "Error al abrir Lista (Compose): ${t::class.simpleName}: ${t.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
         // ===== XML =====
-        binding.btnDetailXml.setOnClickListener { launchOrToast(FilmDataActivity::class.java) }
-        binding.btnEditXml.setOnClickListener { launchOrToast(FilmEditActivity::class.java) }
+        binding.btnDetailXml.setOnClickListener {
+            val i = Intent(this, FilmDataActivity::class.java).apply {
+                putExtra("film_index", 0) // índice seguro para evitar crash si lo lees en destino
+            }
+            launchOrToast(i)
+        }
+
+        binding.btnEditXml.setOnClickListener {
+            val i = Intent(this, FilmEditActivity::class.java).apply {
+                putExtra("film_index", 0)
+            }
+            launchOrToast(i)
+        }
 
         // ===== Compose =====
-        binding.btnDetailCompose.setOnClickListener { launchOrToast(FilmDetailComposeActivity::class.java) }
-        binding.btnEditCompose.setOnClickListener { launchOrToast(FilmEditComposeActivity::class.java) }
+        binding.btnDetailCompose.setOnClickListener {
+            launchOrToast(Intent(this, FilmDetailComposeActivity::class.java))
+        }
+        binding.btnEditCompose.setOnClickListener {
+            launchOrToast(Intent(this, FilmEditComposeActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,7 +96,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_about -> { startActivity(Intent(this, AboutActivity::class.java)); true }
-        R.id.action_web -> { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Carlsalf"))); true }
+        R.id.action_web -> {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Carlsalf"))); true
+        }
         R.id.action_share -> {
             val i = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"

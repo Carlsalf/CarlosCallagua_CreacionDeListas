@@ -36,4 +36,8 @@
     <string name="sample_year_genre_format">Año: 1982 • Género: Sci-Fi • Formato: Blu-ray</string>
     <string name="sample_imdb">https://www.imdb.com/title/tt0083658/</string>
     <string name="sample_notes">Notas de ejemplo sobre la película.</string>
+
+    <string name="btn_guardar">Guardar</string>
+
+
 </resources>

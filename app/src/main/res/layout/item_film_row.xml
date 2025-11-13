@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="8dp"
+    android:padding="12dp"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="80dp">
 
     <ImageView
-        android:id="@+id/imgPosterItem"
+        android:id="@+id/imgPosterRow"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:scaleType="centerCrop"
@@ -14,8 +14,8 @@
         android:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/txtTitleItem"
-        android:layout_toEndOf="@id/imgPosterItem"
+        android:id="@+id/txtTitleRow"
+        android:layout_toEndOf="@id/imgPosterRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -24,9 +24,9 @@
         android:text="Título" />
 
     <TextView
-        android:id="@+id/txtDirectorItem"
-        android:layout_below="@id/txtTitleItem"
-        android:layout_toEndOf="@id/imgPosterItem"
+        android:id="@+id/txtDirectorRow"
+        android:layout_below="@id/txtTitleRow"
+        android:layout_toEndOf="@id/imgPosterRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"

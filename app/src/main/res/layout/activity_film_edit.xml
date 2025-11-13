@@ -116,5 +116,14 @@
             android:overScrollMode="ifContentScrolls"
             tools:ignore="Autofill" />
 
+        <!-- Guardar -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_guardar"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
     </LinearLayout>
 </ScrollView>

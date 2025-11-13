@@ -1,35 +1,45 @@
-package es.ua.eps.filmoteca.ui
+package es.ua.eps.filmoteca
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import es.ua.eps.filmoteca.R
-import es.ua.eps.filmoteca.model.Film
+import android.widget.*
+import androidx.annotation.LayoutRes
 
 class FilmAdapter(
-    private val films: List<Film>,
-    private val onClick: (Film) -> Unit
-) : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
+    context: Context,
+    @LayoutRes private val layoutId: Int,
+    private val items: List<Film>
+) : ArrayAdapter<Film>(context, layoutId, items) {
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val txtTitle: TextView = view.findViewById(R.id.txtTitle)
-        val txtYear: TextView = view.findViewById(R.id.txtYear)
+    private data class Holder(
+        val img: ImageView,
+        val title: TextView,
+        val director: TextView
+    )
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val v: View
+        val h: Holder
+        if (convertView == null) {
+            v = LayoutInflater.from(context).inflate(layoutId, parent, false)
+            h = Holder(
+                v.findViewById(R.id.imgPosterRow),
+                v.findViewById(R.id.txtTitleRow),
+                v.findViewById(R.id.txtDirectorRow)
+            )
+            v.tag = h
+        } else {
+            v = convertView
+            h = v.tag as Holder
+        }
+
+        val film = items[position]
+        h.img.setImageResource(if (film.imageResId != 0) film.imageResId else R.mipmap.ic_launcher)
+        h.title.text = film.title ?: "<Sin título>"
+        h.director.text = film.director ?: ""
+
+        return v
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_film, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val film = films[position]
-        holder.txtTitle.text = film.title
-        holder.txtYear.text = "Año: ${film.year}"
-        holder.itemView.setOnClickListener { onClick(film) }
-    }
-
-    override fun getItemCount(): Int = films.size
 }
