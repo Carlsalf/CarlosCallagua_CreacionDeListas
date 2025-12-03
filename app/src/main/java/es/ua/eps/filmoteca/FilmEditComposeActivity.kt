@@ -1,9 +1,15 @@
 package es.ua.eps.filmoteca
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -23,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.unit.dp
 
@@ -43,6 +50,8 @@ class FilmEditComposeActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilmEditComposeScreen() {
+    val context = LocalContext.current
+
     // Cargar arrays de /res/values/arrays.xml
     val genreOptions = stringArrayResource(id = R.array.genres).toList()
     val formatOptions = stringArrayResource(id = R.array.formats).toList()
@@ -101,12 +110,13 @@ fun FilmEditComposeScreen() {
                 value = selectedGenre,
                 onValueChange = {},
                 label = { Text("Selecciona género") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genreExpanded) },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = genreExpanded)
+                },
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
             )
-            // Usamos DropdownMenu en lugar de ExposedDropdownMenu (compat garantizada)
             DropdownMenu(
                 expanded = genreExpanded,
                 onDismissRequest = { genreExpanded = false }
@@ -133,7 +143,9 @@ fun FilmEditComposeScreen() {
                 value = selectedFormat,
                 onValueChange = {},
                 label = { Text("Selecciona formato") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = formatExpanded) },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = formatExpanded)
+                },
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
@@ -172,7 +184,34 @@ fun FilmEditComposeScreen() {
         )
 
         Button(
-            onClick = { /* TODO: guardar */ },
+            onClick = {
+
+                when {
+                    title.isBlank() || director.isBlank() -> {
+                        Toast.makeText(
+                            context,
+                            "Rellena al menos Título y Director",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    year.length != 4 -> {
+                        Toast.makeText(
+                            context,
+                            "El año debe tener 4 dígitos",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    else -> {
+                        Toast.makeText(
+                            context,
+                            "Guardado (demo): $title ($director)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Guardar")

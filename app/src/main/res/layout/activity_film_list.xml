@@ -4,7 +4,8 @@
     android:id="@+id/rootFilmList"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- Toolbar arriba -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -12,13 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorSurface"
-        app:title="Filmoteca (XML)"
-        app:navigationIcon="?attr/homeAsUpIndicator" />
+        app:title="@string/app_name"
+        app:titleCentered="true" />
 
     <!-- Lista ocupa todo el espacio restante -->
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listFilms"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
 </LinearLayout>

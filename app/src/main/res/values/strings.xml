@@ -2,6 +2,10 @@
 <resources>
     <!-- App -->
     <string name="app_name">Filmoteca</string>
+    <string name="menu_add_film">Añadir película</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_delete_selected">Borrar seleccionadas</string>
+
 
     <!-- About -->
     <string name="autor_texto">Creada por Carlos Alfredo Callagua Llaque</string>
@@ -30,7 +34,7 @@
     <string name="hint_imdb">Enlace a IMDB</string>
     <string name="hint_notes">Notas</string>
 
-    <!-- *** CLAVES SAMPLE USADAS EN LOS LAYOUTS (base/por defecto) *** -->
+    <!--  CLAVES SAMPLE USADAS EN LOS LAYOUTS (base/por defecto)  -->
     <string name="sample_title">Título de ejemplo</string>
     <string name="sample_director">Dirigida por: Ridley Scott</string>
     <string name="sample_year_genre_format">Año: 1982 • Género: Sci-Fi • Formato: Blu-ray</string>
